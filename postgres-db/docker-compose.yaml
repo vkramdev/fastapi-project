@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+ db:
+   container_name: postgres_fcc_api
+   image: postgres
+   restart: always
+   environment:
+     POSTGRES_DB: postgres
+     POSTGRES_USER: admin
+     POSTGRES_PASSWORD: admin
+     PGDATA: /var/lib/postgresql/data
+   ports:
+     - "5435:5435"
+   volumes:
+     - db-data:/var/lib/postgresql/data
+
+ pgadmin:
+   container_name: pgadmin4
+   image: dpage/pgadmin4:7.4
+   restart: always
+   environment:
+     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+     PGADMIN_DEFAULT_PASSWORD: admin
+     PGADMIN_LISTEN_PORT: 8085
+   ports:
+     - "8080:8085"
+   volumes:
+     - pgadmin-data:/var/lib/pgadmin
+volumes:
+ db-data:
+ pgadmin-data:

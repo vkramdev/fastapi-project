@@ -35,7 +35,7 @@ def get_posts():
 
 #First post method check
 @app.post("/posttest")
-def create_post(payload:dict = Body(...)):
+def create_post(payload:dict = Body(...)):  ## what does this Body(...) refer to
     print(payload)
     return{'new_message': f'This is post about title: {payload["title"]}, content: {payload["content"]}'}
 
@@ -98,6 +98,25 @@ def delete_post(id: int):
             break
     if del_idx:
         Response(status_code=status.HTTP_204_NO_CONTENT)
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail= f"post with id : {id} not found")
+    
+#update post
+@app.put("/posts/{id}")
+def update_post(id: int,post: Post):
+    update_post=False
+    post_dict=post.model_dump()
+    for i,p in enumerate(all_post):
+        if p['id']==id:
+            post_dict['id']=id
+            all_post[i]=post_dict
+            update_post=True
+        else:
+            pass
+
+    if update_post:
+        return {'data':post_dict}
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail= f"post with id : {id} not found")
