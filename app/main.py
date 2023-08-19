@@ -14,6 +14,8 @@ class Post(BaseModel):
     published: bool =True
     rating: Optional[int] = None
 
+#This is temporary way to create ,delete and update untill the posts are stored in
+#DB
 all_post = [{"title":"This is post one", "content":"dummy content", "id":1},
             {"title":"This is post two", "content":"dummy content two", "id":2}]
 
